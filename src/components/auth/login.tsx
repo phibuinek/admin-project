@@ -7,6 +7,7 @@ import { authenticate } from "@/utils/actions";
 
 const Login = () => {
   const onFinish = async (values: any) => {
+    // console.log("check values: ", values);
     const { email, password } = values;
     // const data = await signIn("credentials", {
     //   email,
@@ -15,6 +16,7 @@ const Login = () => {
     // });
     // console.log(">>> check dta: ", data);
     const res = await authenticate(email, password);
+    // console.log(">>> check res: ", res);
   };
 
   return (
