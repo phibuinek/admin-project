@@ -1,22 +1,38 @@
 "use client";
-import { Button, Col, Divider, Form, Input, Row } from "antd";
+import { Button, Col, Divider, Form, Input, notification, Row } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { authenticate } from "@/utils/actions";
+import { useRouter } from "next/router";
 
 const Login = () => {
   const onFinish = async (values: any) => {
+    const router = useRouter();
     // console.log("check values: ", values);
-    const { email, password } = values;
+    const { username, password } = values;
     // const data = await signIn("credentials", {
     //   email,
     //   password,
     //   redirectTo: false,
     // });
     // console.log(">>> check dta: ", data);
-    const res = await authenticate(email, password);
+    const res = await authenticate(username, password);
     // console.log(">>> check res: ", res);
+
+    if (res?.error) {
+      //error
+      notification.error({
+        message: "Error login",
+        description: res?.error,
+      });
+      if (res?.code === 2) {
+        router.push("/verify");
+      }
+    } else {
+      //redirect to dashboard
+      router.push("/dashboard");
+    }
   };
 
   return (
@@ -39,7 +55,7 @@ const Login = () => {
           >
             <Form.Item
               label="Email"
-              name="email"
+              name="username"
               rules={[
                 {
                   required: true,
