@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import { Button, Col, Divider, Form, Input, notification, Row } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
@@ -6,7 +7,7 @@ import Link from "next/link";
 import { sendRequest } from "@/utils/api";
 import { useRouter } from "next/navigation";
 
-const Register = () => {
+const Verify = () => {
   const router = useRouter();
   const onFinish = async (values: any) => {
     const { email, password, name } = values;
@@ -40,33 +41,26 @@ const Register = () => {
             borderRadius: "5px",
           }}
         >
-          <legend>Đăng Ký Tài Khoản</legend>
+          <legend>Kích hoạt Tài Khoản</legend>
           <Form
             name="basic"
             onFinish={onFinish}
             autoComplete="off"
             layout="vertical"
           >
-            <Form.Item
-              label="Email"
-              name="email"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your email!",
-                },
-              ]}
-            >
-              <Input />
+            <Form.Item label="Id" name="_id">
+              <Input disabled />
             </Form.Item>
-
+            <div>
+              Mã code đã được gửi tới email đăng ký, vui lòng kiểm tra email
+            </div>
             <Form.Item
-              label="Password"
-              name="password"
+              label="Code"
+              name="code"
               rules={[
                 {
                   required: true,
-                  message: "Please input your password!",
+                  message: "Please input your code!",
                 },
               ]}
             >
@@ -96,4 +90,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Verify;
